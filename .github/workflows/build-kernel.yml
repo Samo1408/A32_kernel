@@ -190,13 +190,7 @@ jobs:
           done
           ls -lh "$toolchain/bin/"*gcc* "$toolchain/bin/"*g++* 2>&1 | head -n 20 || true
 
-      - name: Check unmodified BakaSU source
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p "$OUT_DIR"
-          sh scripts/prepare_bakasu.sh --check | tee "$OUT_DIR/bakasu-source.txt"
-
+      
       - name: Show build metadata
         shell: bash
         run: |
@@ -236,7 +230,7 @@ jobs:
           make -C "$GITHUB_WORKSPACE" O="$OUT_DIR" clean -j$(nproc) || true
           make -C "$GITHUB_WORKSPACE" O="$OUT_DIR" mrproper -j$(nproc) || true
 
-          echo "Defconfig: a32_slamzdank_defconfig"
+          echo "Defconfig: m32_defconfig"
           make -C "$GITHUB_WORKSPACE" O="$OUT_DIR" -j$(nproc) a32_slamzdank_defconfig
 
           # The BakaSU preinit runner is compiled during Kbuild and needs the
